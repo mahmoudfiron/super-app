@@ -1,8 +1,14 @@
-version: '3.8'
-
 services:
-  web:
-    build: .
+  node-app:
+    build:
+      context: ./node
+      dockerfile: Dockerfile
     ports:
-      - "8017:3000"
-    container_name: super-app-container
+      - "3000:3000"
+
+  php-app:
+    build:
+      context: ./php
+      dockerfile: Dockerfile
+    ports:
+      - "8000:80"
