@@ -24,15 +24,15 @@ jobs:
       - name: Build and Push Node App
         uses: docker/build-push-action@v5
         with:
-          context: ./node-app
-          file: ./node-app/Dockerfile
+          context: ./node
+          file: ./node/Dockerfile
           push: true
-          tags: mahmoudfiron/super-app-node-app:latest
+          tags: mahmoudfiron/super-app-node:latest
 
       - name: Build and Push PHP App
         uses: docker/build-push-action@v5
         with:
-          context: ./php-app
-          file: ./php-app/Dockerfile
+          context: ./php
+          file: ./php/Dockerfile
           push: true
-          tags: mahmoudfiron/super-app-php-app:latest
+          tags: mahmoudfiron/super-app-php:latest
