@@ -1,14 +1,20 @@
+version: '3'
 services:
   node-app:
-    build:
-      context: ./node
-      dockerfile: Dockerfile
+    build: ./node
     ports:
       - "3000:3000"
 
   php-app:
-    build:
-      context: ./php
-      dockerfile: Dockerfile
+    build: ./php
     ports:
-      - "8000:80"
+      - "8080:80"
+
+  mysql:
+    image: mysql:8.0.28
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: super-app
+    ports:
+      - "3306:3306"
