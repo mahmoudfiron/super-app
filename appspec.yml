@@ -1,0 +1,15 @@
+version: 0.0
+os: linux
+files:
+hooks:
+  BeforeInstall:
+    - location: scripts/install-dependencies
+      timeout: 300
+      runas: root
+    - location: scripts/start-container
+      timeout: 300
+      runas: root
+  ApplicationStop:
+    - location: scripts/stop-container
+      timeout: 300
+      runas: root
