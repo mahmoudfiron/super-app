@@ -1,20 +1,54 @@
-version: '3'
+version: '3.8'
+
 services:
   node-app:
-    build: ./node
+    build:
+      context: ./node
+      dockerfile: Dockerfile
+    container_name: super-app-node
     ports:
       - "3000:3000"
+    environment:
+      - DB_HOST=mysql
+      - DB_USER=root
+      - DB_PASSWORD=password
+      - DB_NAME=super-app
+    depends_on:
+      - mysql
+    restart: unless-stopped
+    networks:
+      - super-app-network
 
   php-app:
-    build: ./php
+    build:
+      context: ./php
+      dockerfile: Dockerfile
+    container_name: super-app-php
     ports:
       - "8080:80"
+    depends_on:
+      - mysql
+    networks:
+      - super-app-network
+    restart: unless-stopped
 
   mysql:
     image: mysql:8.0.28
-    restart: always
+    container_name: super-app-mysql
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: super-app
     ports:
       - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - super-app-network
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
+
+networks:
+  super-app-network:
+    driver: bridge
