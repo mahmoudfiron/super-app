@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
-set -e
+set -euo pipefail
 
-# Stop containers by CONTAINER NAME (not image)
-docker rm -f super-app-node  || true
-docker rm -f super-app-php   || true
-docker rm -f super-app-mysql || true
+for name in super-app-php super-app-node super-app-mysql; do
+  if docker ps -a --format '{{.Names}}' | grep -Eq "^${name}$"; then
+    docker rm -f "$name"
+  fi
+done
+
+docker image rm -f mahmoudfiron/super-app-node:latest || true
+docker image rm -f mahmoudfiron/super-app-php:latest || true
