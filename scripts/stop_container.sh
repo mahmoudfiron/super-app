@@ -1,3 +1,7 @@
-#!/bin/bash
-sudo docker stop super-app-php super-app-node 
-sudo docker rm super-app-php super-app-node 
+#!/usr/bin/env bash
+set -e
+
+# Stop containers by CONTAINER NAME (not image)
+docker rm -f super-app-node  || true
+docker rm -f super-app-php   || true
+docker rm -f super-app-mysql || true
